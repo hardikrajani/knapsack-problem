@@ -32,6 +32,13 @@ public class PackerTest {
 
 		assertThrows(APIException.class, () -> Packer.pack(URLDecoder.decode(invalidMaxWeight.getAbsolutePath(), "UTF-8")));
 	}
+
+	@Test
+	public void testWhenWeightOrCostExceedsLimits() {
+		invalidMaxWeight = new File(getClass().getClassLoader().getResource("invalid_item_limit.txt").getFile());
+
+		assertThrows(APIException.class, () -> Packer.pack(URLDecoder.decode(invalidMaxWeight.getAbsolutePath(), "UTF-8")));
+	}
 	
 	@Test
 	public void testWhenItemsExceedsLimits() {

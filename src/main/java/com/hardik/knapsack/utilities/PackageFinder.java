@@ -41,11 +41,11 @@ public class PackageFinder {
 					ids.add(item.getId());
 					
 					if(mergeWeight < packageMaxWeight) {
-						newPossibleItems.add(new MergeItems(ids, mergeWeight, mergeCost));
+						MergeItems newMergeItem = new MergeItems(ids, mergeWeight, mergeCost);
+						newPossibleItems.add(newMergeItem);
 					}
 				}
-				
-				mergeList.addAll(newPossibleItems);
+				addRemoveDominant(mergeList, newPossibleItems);
 			}
 			List<Integer> idList = new ArrayList<>();
 			idList.add(item.getId());
@@ -63,4 +63,18 @@ public class PackageFinder {
 		        .collect(Collectors.joining(","));
 	}
 	
+	private void addRemoveDominant(List<MergeItems> mergeItemList, List<MergeItems> newMergeItems) {
+		List<MergeItems> removeItems = new ArrayList<>();
+		for (MergeItems mergeItems : mergeItemList) {
+			for (MergeItems mergeItemToAdd : newMergeItems) {
+				if(mergeItemToAdd.getCost() > mergeItems.getCost() && mergeItemToAdd.getWeight() <= mergeItems.getWeight()) {
+					removeItems.add(mergeItems);
+				} else if(mergeItemToAdd.getCost() < mergeItems.getCost() && mergeItemToAdd.getWeight() >= mergeItems.getWeight()) {
+					removeItems.add(mergeItemToAdd);
+				}
+			}
+		}
+		mergeItemList.addAll(newMergeItems);
+		mergeItemList.removeAll(removeItems);
+	}
 }

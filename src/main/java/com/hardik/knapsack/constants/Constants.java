@@ -8,6 +8,7 @@ public final class Constants {
 
 	public static final int MAX_ITEMS = 15;
 	public static final int MAX_WEIGHT = 100;
+	public static final int MAX_COST = 100;
 	public static final int FIRST_ELEMENT = 0;
 
 }
